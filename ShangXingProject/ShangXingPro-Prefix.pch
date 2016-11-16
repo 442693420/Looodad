@@ -1,0 +1,51 @@
+//
+//  ShangXingPro-Prefix.pch
+//  ShangXingProject
+//
+//  Created by 张浩 on 2016/11/9.
+//  Copyright © 2016年 张浩. All rights reserved.
+//
+
+#ifndef ShangXingPro_Prefix_pch
+#define ShangXingPro_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#ifndef Application_prefix_h
+#define Application_prefix_h
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <Masonry.h>
+#import "SVProgressHUD.h"
+#import "UIView+Toast.h"
+#import "NSString+NTES.h"
+#import "UIView+NTES.h"
+#import "IQKeyboardManager.h"//显示键盘的时候防止控件被遮挡
+#import "Key.h"
+#import "PublicObject.h"
+#import "UIColor+Hex.h"
+#import "NSString+CalculateFontSize.h"
+//网易云信
+#ifdef __OBJC__
+
+#import "NIMSDK.h"
+#import "NTESGlobalMacro.h"
+#import "NIMKit.h"
+#import "NIMAVChat.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+
+#ifdef DEBUG
+static DDLogLevel ddLogLevel = DDLogLevelVerbose;
+#else
+static DDLogLevel ddLogLevel = DDLogLevelInfo;
+#endif
+
+#define NTES_USE_CLEAR_BAR - (BOOL)useClearBar{return YES;}
+
+#define NTES_FORBID_INTERACTIVE_POP - (BOOL)forbidInteractivePop{return YES;}
+
+
+#endif
+#endif
+#endif /* ShangXingPro_Prefix_pch */
