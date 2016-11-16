@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import "AppDelegate.h"
 #import <Masonry.h>
 #import "SVProgressHUD.h"
 #import "UIView+Toast.h"
@@ -26,6 +27,11 @@
 #import "PublicObject.h"
 #import "UIColor+Hex.h"
 #import "NSString+CalculateFontSize.h"
+#import "MJRefresh.h"
+
+//播放器
+#import "UIImageView+WebCache.h"
+#import "WMPlayer.h"
 //网易云信
 #ifdef __OBJC__
 

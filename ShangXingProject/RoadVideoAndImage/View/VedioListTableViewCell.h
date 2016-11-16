@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "VideoModel.h"
 @interface VedioListTableViewCell : UITableViewCell
+
+@property (strong, nonatomic)UIImageView *backgroundIV;
+@property (strong, nonatomic)UIButton *playBtn;
+
+@property (nonatomic, strong)VideoModel *model;
 
 @end

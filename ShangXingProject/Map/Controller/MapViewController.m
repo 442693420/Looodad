@@ -567,6 +567,8 @@ updatingLocation:(BOOL)updatingLocation
 -(void)mapBottomViewVideoBtnClick{
     VedioListViewController *viewController = [[VedioListViewController alloc]init];
     [self.navigationController pushViewController:viewController animated:YES];
+//    VedioDetailViewController *viewController = [[VedioDetailViewController alloc]init];
+//    [self.navigationController pushViewController:viewController animated:YES];
 }
 -(void)mapBottomViewImageBtnClick{
     ImgListViewController *viewController = [[ImgListViewController alloc]init];
