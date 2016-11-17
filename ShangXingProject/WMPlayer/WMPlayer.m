@@ -60,7 +60,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         //AVPlayerLayer
         self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
         self.playerLayer.frame = self.layer.bounds;
-//        self.playerLayer.videoGravity = AVLayerVideoGravityResize;
+        self.playerLayer.videoGravity = AVLayerVideoGravityResize;//拉伸并且显示全。fill:拉伸但是显示不全；aspect:不大神但是显示全
         [self.layer addSublayer:_playerLayer];
         
         //bottomView
@@ -93,34 +93,35 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         
         
         
-        MPVolumeView *volumeView = [[MPVolumeView alloc]init];
-        [self addSubview:volumeView];
-        [volumeView sizeToFit];
-        
-        
-        systemSlider = [[UISlider alloc]init];
-        systemSlider.backgroundColor = [UIColor clearColor];
-        for (UIControl *view in volumeView.subviews) {
-            if ([view.superclass isSubclassOfClass:[UISlider class]]) {
-                NSLog(@"1");
-                systemSlider = (UISlider *)view;
-            }
-        }
-        systemSlider.autoresizesSubviews = NO;
-        systemSlider.autoresizingMask = UIViewAutoresizingNone;
-        [self addSubview:systemSlider];
-        systemSlider.hidden = YES;
-        
-        
-        
-        self.volumeSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-        self.volumeSlider.tag = 1000;
-        self.volumeSlider.hidden = YES;
-        self.volumeSlider.minimumValue = systemSlider.minimumValue;
-        self.volumeSlider.maximumValue = systemSlider.maximumValue;
-        self.volumeSlider.value = systemSlider.value;
-        [self.volumeSlider addTarget:self action:@selector(updateSystemVolumeValue:) forControlEvents:UIControlEventValueChanged];
-        [self addSubview:self.volumeSlider];
+//        MPVolumeView *volumeView = [[MPVolumeView alloc]init];
+//        volumeView.showsRouteButton = NO;
+//        [self addSubview:volumeView];
+//        [volumeView sizeToFit];
+//
+//        
+//        systemSlider = [[UISlider alloc]init];
+//        systemSlider.backgroundColor = [UIColor clearColor];
+//        for (UIControl *view in volumeView.subviews) {
+//            if ([view.superclass isSubclassOfClass:[UISlider class]]) {
+//                NSLog(@"1");
+//                systemSlider = (UISlider *)view;
+//            }
+//        }
+//        systemSlider.autoresizesSubviews = NO;
+//        systemSlider.autoresizingMask = UIViewAutoresizingNone;
+//        [self addSubview:systemSlider];
+//        systemSlider.hidden = YES;
+//        
+//        
+//        
+//        self.volumeSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+//        self.volumeSlider.tag = 1000;
+//        self.volumeSlider.hidden = YES;
+//        self.volumeSlider.minimumValue = systemSlider.minimumValue;
+//        self.volumeSlider.maximumValue = systemSlider.maximumValue;
+//        self.volumeSlider.value = systemSlider.value;
+//        [self.volumeSlider addTarget:self action:@selector(updateSystemVolumeValue:) forControlEvents:UIControlEventValueChanged];
+//        [self addSubview:self.volumeSlider];
         
         
         //slider
@@ -176,8 +177,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         
         
         
-        
-        
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _closeBtn.showsTouchWhenHighlighted = YES;
         [_closeBtn addTarget:self action:@selector(colseTheVideo:) forControlEvents:UIControlEventTouchUpInside];
@@ -189,16 +188,12 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         
         
         [self.closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            
-            
             make.left.equalTo(self.bottomView).with.offset(5);
             make.height.mas_equalTo(30);
             make.top.equalTo(self).with.offset(5);
             make.width.mas_equalTo(30);
-            
-            
         }];
+        self.closeBtn.hidden = YES;//隐藏关闭按钮
         
         
         
@@ -213,6 +208,9 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         doubleTap.numberOfTapsRequired = 2; // 双击
         [self addGestureRecognizer:doubleTap];
         
+        //这行很关键，意思是只有当没有检测到doubleTapGestureRecognizer 或者 检测doubleTapGestureRecognizer失败，singleTapGestureRecognizer才有效
+        [singleTap requireGestureRecognizerToFail:doubleTap];
+
 
         [self.currentItem addObserver:self
                           forKeyPath:@"status"

@@ -27,6 +27,7 @@
             make.centerX.centerY.equalTo(self.contentView);
             make.width.height.equalTo(@60);
         }];
+
     }
     return self;
 }

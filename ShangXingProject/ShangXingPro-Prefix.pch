@@ -28,7 +28,6 @@
 #import "UIColor+Hex.h"
 #import "NSString+CalculateFontSize.h"
 #import "MJRefresh.h"
-
 //播放器
 #import "UIImageView+WebCache.h"
 #import "WMPlayer.h"

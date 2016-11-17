@@ -12,7 +12,7 @@
 #import "SidModel.h"
 #import "VideoModel.h"
 #import "WMPlayer.h"
-#import "DataManager.h"
+#import "NetworkingObject+VideoListHttpRequest.h"
 @interface VedioListViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 @property (nonatomic , strong)UITableView *tableView;
 @property (nonatomic , strong)NSMutableArray *videoArr;
@@ -79,41 +79,34 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
     __unsafe_unretained UITableView *tableView = self.tableView;
     // 下拉刷新
     tableView.header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [[DataManager shareManager] getSIDArrayWithURLString:@"http://c.m.163.com/nc/video/home/0-10.html"
-                                                     success:^(NSArray *sidArray, NSArray *videoArray) {
-                                                         self.videoArr =[NSMutableArray arrayWithArray:videoArray];
-                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                             if (self.currentIndexPath.row>self.videoArr.count) {
-                                                                 [self releaseWMPlayer];
-                                                             }
-                                                             [tableView reloadData];
-                                                             [tableView.header endRefreshing];
-                                                         });
-                                                     }
-                                                      failed:^(NSError *error) {
-                                                          
-                                                      }];
-        
+        [NetworkingObject getVedioArrayWithURLString:@"http://c.m.163.com/nc/video/home/0-10.html" success:^(NSArray *vedioArr, NSArray *sidArr) {
+            self.videoArr =[NSMutableArray arrayWithArray:vedioArr];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (self.currentIndexPath.row>self.videoArr.count) {
+                    [self releaseWMPlayer];
+                }
+                [tableView reloadData];
+                [tableView.header endRefreshing];
+            });
+        } fail:^(NSError *error) {
+            
+        }];
+        [tableView.header endRefreshing];
     }];
-    
-    
     // 设置自动切换透明度(在导航栏下面自动隐藏)
     tableView.header.autoChangeAlpha = YES;
     // 上拉刷新
     tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         NSString *URLString = [NSString stringWithFormat:@"http://c.m.163.com/nc/video/home/%ld-10.html",self.videoArr.count - self.videoArr.count%10];
-        [[DataManager shareManager] getSIDArrayWithURLString:URLString
-                                                     success:^(NSArray *sidArray, NSArray *videoArray) {
-                                                         [self.videoArr addObjectsFromArray:videoArray];
-                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                             [tableView reloadData];
-                                                             [tableView.header endRefreshing];
-                                                         });
-                                                         
-                                                     }
-                                                      failed:^(NSError *error) {
-                                                          
-                                                      }];
+        [NetworkingObject getVedioArrayWithURLString:URLString success:^(NSArray *vedioArr, NSArray *sidArr) {
+            [self.videoArr addObjectsFromArray:vedioArr];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [tableView reloadData];
+                [tableView.header endRefreshing];
+            });
+        } fail:^(NSError *error) {
+            
+        }];
         // 结束刷新
         [tableView.footer endRefreshing];
     }];
@@ -124,6 +117,8 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
 -(void)videoDidFinished:(NSNotification *)notice{
     VedioListTableViewCell *currentCell = (VedioListTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndexPath.row inSection:0]];
     [currentCell.playBtn.superview bringSubviewToFront:currentCell.playBtn];
+    currentCell.playBtn.userInteractionEnabled = YES;
+    currentCell.backgroundIV.userInteractionEnabled = NO;
     [self.wmPlayer removeFromSuperview];
     
 }
@@ -273,7 +268,7 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
     [self.wmPlayer removeFromSuperview];
     [UIView animateWithDuration:0.5f animations:^{
         self.wmPlayer.transform = CGAffineTransformIdentity;
-        self.wmPlayer.frame = CGRectMake(UIScreenWidth/2,UIScreenHeight-UIScreenHeight-(UIScreenWidth/2)*0.75, UIScreenWidth/2, (UIScreenWidth/2)*0.75);
+        self.wmPlayer.frame = CGRectMake(0,64, UIScreenWidth/2, (UIScreenWidth/2)*0.75);
         self.wmPlayer.playerLayer.frame =  self.wmPlayer.bounds;
         [[UIApplication sharedApplication].keyWindow addSubview:self.wmPlayer];
         [self.wmPlayer.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -382,6 +377,11 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
     [self.currentCell.backgroundIV addSubview:self.wmPlayer];
     [self.currentCell.backgroundIV bringSubviewToFront:self.wmPlayer];
     [self.currentCell.playBtn.superview sendSubviewToBack:self.currentCell.playBtn];
+    //重要！！
+    //userInteractionEnabled属性可以设置视图是否可以接收到用户的事件和消息，是否可以跟用户交互，如果不想视图接收事件消息，设置为no就可以了，比如说：当一个父视图中包含一个子视图a时，同时又包含另外一个视图b；但是b被a覆盖住了，这样b就不能相应事件，这时候设置a的userInteractionEnabled为no，b的userInteractionEnabled为yes，b就可以接收到消息事件了
+    self.currentCell.backgroundIV.userInteractionEnabled = YES;
+    self.currentCell.playBtn.userInteractionEnabled = NO;
+
     [self.tableView reloadData];
     
 }
