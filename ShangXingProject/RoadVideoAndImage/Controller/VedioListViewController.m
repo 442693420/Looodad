@@ -18,7 +18,6 @@
 @property (nonatomic , strong)NSMutableArray *videoArr;
 @property (nonatomic , strong)WMPlayer *wmPlayer;
 @property (nonatomic , strong)NSIndexPath *currentIndexPath;
-@property (nonatomic , assign)BOOL isSmallScreen;
 @property (nonatomic , strong)VedioListTableViewCell *currentCell;
 
 @end
@@ -40,36 +39,22 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
     [self.tableView registerClass:[VedioListTableViewCell class] forCellReuseIdentifier:cellIdentifier];
     //数据
     self.videoArr = [[NSMutableArray alloc]init];
-
-    self.isSmallScreen = NO;
     
     //注册播放完成通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoDidFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     //注册全屏通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullScreenBtnClick:) name:@"fullScreenBtnClickNotice" object:nil];
-    
-    //关闭通知
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(closeTheVideo:)
-                                                 name:@"closeTheVideo"
-                                               object:nil
-     ];
-    
-    [self addMJRefresh];
-}
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
     //旋转屏幕通知
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onDeviceOrientationChange)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil
      ];
+    [self addMJRefresh];
 }
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self.tableView.header beginRefreshing];
-    
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -122,23 +107,12 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
     [self.wmPlayer removeFromSuperview];
     
 }
--(void)closeTheVideo:(NSNotification *)obj{
-    VedioListTableViewCell *currentCell = (VedioListTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndexPath.row inSection:0]];
-    [currentCell.playBtn.superview bringSubviewToFront:currentCell.playBtn];
-    [self releaseWMPlayer];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
-}
 -(void)fullScreenBtnClick:(NSNotification *)notice{
     UIButton *fullScreenBtn = (UIButton *)[notice object];
     if (fullScreenBtn.isSelected) {//全屏显示
         [self toFullScreenWithInterfaceOrientation:UIInterfaceOrientationLandscapeLeft];
     }else{
-        if (self.isSmallScreen) {
-            //放widow上,小屏显示
-            [self toSmallScreen];
-        }else{
-            [self toCell];
-        }
+        [self toCell];
     }
 }
 /**
@@ -159,13 +133,7 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
         case UIInterfaceOrientationPortrait:{
             NSLog(@"第0个旋转方向---电池栏在上");
             if (self.wmPlayer.isFullscreen) {
-                if (self.isSmallScreen) {
-                    //放widow上,小屏显示
-                    [self toSmallScreen];
-                }else{
                     [self toCell];
-                }
-                
             }
             
         }
@@ -196,7 +164,7 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
     [self.wmPlayer removeFromSuperview];
     NSLog(@"row = %ld",self.currentIndexPath.row);
     [UIView animateWithDuration:0.5f animations:^{
-       self.wmPlayer.transform = CGAffineTransformIdentity;
+        self.wmPlayer.transform = CGAffineTransformIdentity;
         self.wmPlayer.frame = currentCell.backgroundIV.bounds;
         self.wmPlayer.playerLayer.frame =  self.wmPlayer.bounds;
         [currentCell.backgroundIV addSubview:self.wmPlayer];
@@ -221,7 +189,6 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
         
     }completion:^(BOOL finished) {
         self.wmPlayer.isFullscreen = NO;
-        self.isSmallScreen = NO;
         self.wmPlayer.fullScreenBtn.selected = NO;
         [[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
         
@@ -263,39 +230,6 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
     [self.wmPlayer bringSubviewToFront:self.wmPlayer.bottomView];
     
 }
--(void)toSmallScreen{
-    //放widow上
-    [self.wmPlayer removeFromSuperview];
-    [UIView animateWithDuration:0.5f animations:^{
-        self.wmPlayer.transform = CGAffineTransformIdentity;
-        self.wmPlayer.frame = CGRectMake(0,64, UIScreenWidth/2, (UIScreenWidth/2)*0.75);
-        self.wmPlayer.playerLayer.frame =  self.wmPlayer.bounds;
-        [[UIApplication sharedApplication].keyWindow addSubview:self.wmPlayer];
-        [self.wmPlayer.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.wmPlayer).with.offset(0);
-            make.right.equalTo(self.wmPlayer).with.offset(0);
-            make.height.mas_equalTo(40);
-            make.bottom.equalTo(self.wmPlayer).with.offset(0);
-        }];
-        
-        [self.wmPlayer.closeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.wmPlayer).with.offset(5);
-            make.height.mas_equalTo(30);
-            make.width.mas_equalTo(30);
-            make.top.equalTo(self.wmPlayer).with.offset(5);
-            
-        }];
-        
-    }completion:^(BOOL finished) {
-        self.wmPlayer.isFullscreen = NO;
-        self.wmPlayer.fullScreenBtn.selected = NO;
-        self.isSmallScreen = YES;
-        [[UIApplication sharedApplication].keyWindow bringSubviewToFront:self.wmPlayer];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO animated:YES];
-    }];
-    
-}
-
 #pragma tableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -339,16 +273,16 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
         }
     }
     return cell;
-
+    
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    VideoModel *model = [self.videoArr objectAtIndex:indexPath.row];
-//    VedioDetailViewController *viewController = [[VedioDetailViewController alloc] init];
-////    viewController.URLString  = model.m3u8_url;
-////    viewController.title = model.title;
-////    //    detailVC.URLString = model.mp4_url;
-//    [self.navigationController pushViewController:viewController animated:YES];
+    //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //    VideoModel *model = [self.videoArr objectAtIndex:indexPath.row];
+    //    VedioDetailViewController *viewController = [[VedioDetailViewController alloc] init];
+    ////    viewController.URLString  = model.m3u8_url;
+    ////    viewController.title = model.title;
+    ////    //    detailVC.URLString = model.mp4_url;
+    //    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -362,7 +296,6 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
     
     self.currentCell = (VedioListTableViewCell *)sender.superview.superview;
     VideoModel *model = [self.videoArr objectAtIndex:sender.tag];
-    self.isSmallScreen = NO;
     
     if (self.wmPlayer) {
         [self.wmPlayer removeFromSuperview];
@@ -381,8 +314,8 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
     //userInteractionEnabled属性可以设置视图是否可以接收到用户的事件和消息，是否可以跟用户交互，如果不想视图接收事件消息，设置为no就可以了，比如说：当一个父视图中包含一个子视图a时，同时又包含另外一个视图b；但是b被a覆盖住了，这样b就不能相应事件，这时候设置a的userInteractionEnabled为no，b的userInteractionEnabled为yes，b就可以接收到消息事件了
     self.currentCell.backgroundIV.userInteractionEnabled = YES;
     self.currentCell.playBtn.userInteractionEnabled = NO;
-
-    [self.tableView reloadData];
+    
+//    [self.tableView reloadData];
     
 }
 #pragma mark scrollView delegate
@@ -401,11 +334,14 @@ static NSString *cellIdentifier = @"VedioListTableViewCell";
             
             if (rectInSuperview.origin.y<-self.currentCell.backgroundIV.frame.size.height||rectInSuperview.origin.y>self.view.frame.size.height-44) {//往上拖动//kNavbarHeight
                 
-                if ([[UIApplication sharedApplication].keyWindow.subviews containsObject:self.wmPlayer]&&self.isSmallScreen) {
-                    self.isSmallScreen = YES;
+                if ([[UIApplication sharedApplication].keyWindow.subviews containsObject:self.wmPlayer]) {
                 }else{
-                    //放widow上,小屏显示
-                    [self toSmallScreen];
+                    //停止之前的播放
+                    VedioListTableViewCell *currentCell = (VedioListTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndexPath.row inSection:0]];
+                    [currentCell.playBtn.superview bringSubviewToFront:currentCell.playBtn];
+                    currentCell.playBtn.userInteractionEnabled = YES;
+                    currentCell.backgroundIV.userInteractionEnabled = NO;
+                    [self.wmPlayer removeFromSuperview];
                 }
                 
             }else{
