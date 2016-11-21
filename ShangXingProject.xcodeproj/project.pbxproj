@@ -380,6 +380,11 @@
 		615A95EA1DDC019E0018898E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 615A95E91DDC019E0018898E /* MediaPlayer.framework */; };
 		615A95EC1DDC01AE0018898E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 615A95EB1DDC01AE0018898E /* MobileCoreServices.framework */; };
 		615A95EE1DDC01D80018898E /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 615A95ED1DDC01D80018898E /* VideoToolbox.framework */; };
+		6183AEAF1DE004F70062043D /* CACoordLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6183AEA81DE004F70062043D /* CACoordLayer.m */; };
+		6183AEB01DE004F70062043D /* MovingAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6183AEAA1DE004F70062043D /* MovingAnnotationView.m */; };
+		6183AEB11DE004F70062043D /* TracingPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 6183AEAC1DE004F70062043D /* TracingPoint.m */; };
+		6183AEB21DE004F70062043D /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 6183AEAE1DE004F70062043D /* Util.m */; };
+		6183AEB51DE036330062043D /* CarDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6183AEB41DE036330062043D /* CarDataObject.m */; };
 		61F09CAA1DDD4A5700471D2A /* NetworkingObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 61F09CA91DDD4A5700471D2A /* NetworkingObject.m */; };
 		61F09CAD1DDD4A9F00471D2A /* NetworkingObject+VideoListHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 61F09CAC1DDD4A9F00471D2A /* NetworkingObject+VideoListHttpRequest.m */; };
 		61FC3CDF1DDA9772002DB61B /* SliderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FC3CDE1DDA9772002DB61B /* SliderManager.m */; };
@@ -410,8 +415,8 @@
 
 /* Begin PBXFileReference section */
 		30E58F2EEA2CB823790827E1 /* libPods-ShangXingProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShangXingProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		61005B761DD456FB00B85919 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../AppDelegate.h; sourceTree = "<group>"; };
-		61005B771DD456FB00B85919 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ../AppDelegate.m; sourceTree = "<group>"; };
+		61005B761DD456FB00B85919 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		61005B771DD456FB00B85919 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		61005B7C1DD458A100B85919 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		61005B7D1DD458A100B85919 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		61005B7F1DD4604D00B85919 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -1156,6 +1161,16 @@
 		615A95E91DDC019E0018898E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		615A95EB1DDC01AE0018898E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		615A95ED1DDC01D80018898E /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		6183AEA71DE004F70062043D /* CACoordLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACoordLayer.h; sourceTree = "<group>"; };
+		6183AEA81DE004F70062043D /* CACoordLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CACoordLayer.m; sourceTree = "<group>"; };
+		6183AEA91DE004F70062043D /* MovingAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovingAnnotationView.h; sourceTree = "<group>"; };
+		6183AEAA1DE004F70062043D /* MovingAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovingAnnotationView.m; sourceTree = "<group>"; };
+		6183AEAB1DE004F70062043D /* TracingPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TracingPoint.h; sourceTree = "<group>"; };
+		6183AEAC1DE004F70062043D /* TracingPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TracingPoint.m; sourceTree = "<group>"; };
+		6183AEAD1DE004F70062043D /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		6183AEAE1DE004F70062043D /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
+		6183AEB31DE036330062043D /* CarDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarDataObject.h; sourceTree = "<group>"; };
+		6183AEB41DE036330062043D /* CarDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarDataObject.m; sourceTree = "<group>"; };
 		61F09CA81DDD4A5700471D2A /* NetworkingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingObject.h; sourceTree = "<group>"; };
 		61F09CA91DDD4A5700471D2A /* NetworkingObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkingObject.m; sourceTree = "<group>"; };
 		61F09CAB1DDD4A9F00471D2A /* NetworkingObject+VideoListHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetworkingObject+VideoListHttpRequest.h"; sourceTree = "<group>"; };
@@ -1334,6 +1349,8 @@
 		611E214E1DD2C71900277F0F /* ShangXingProject */ = {
 			isa = PBXGroup;
 			children = (
+				61005B761DD456FB00B85919 /* AppDelegate.h */,
+				61005B771DD456FB00B85919 /* AppDelegate.m */,
 				6133FD4C1DDC75A20098B383 /* WMPlayer */,
 				6133FD301DDC737E0098B383 /* RoadVideoAndImage */,
 				61232BF91DD9890900C5CDEC /* IM */,
@@ -2959,8 +2976,7 @@
 		61232C041DD9890900C5CDEC /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				61005B761DD456FB00B85919 /* AppDelegate.h */,
-				61005B771DD456FB00B85919 /* AppDelegate.m */,
+				6183AEA61DE004F70062043D /* MovingAnnotationSource */,
 				61232C0D1DD9892F00C5CDEC /* Controller */,
 				61232C101DD9892F00C5CDEC /* View */,
 			);
@@ -3071,6 +3087,23 @@
 				6133FD5F1DDC77090098B383 /* video_play_btn_bg@2x.png */,
 			);
 			path = VideoResource;
+			sourceTree = "<group>";
+		};
+		6183AEA61DE004F70062043D /* MovingAnnotationSource */ = {
+			isa = PBXGroup;
+			children = (
+				6183AEA71DE004F70062043D /* CACoordLayer.h */,
+				6183AEA81DE004F70062043D /* CACoordLayer.m */,
+				6183AEA91DE004F70062043D /* MovingAnnotationView.h */,
+				6183AEAA1DE004F70062043D /* MovingAnnotationView.m */,
+				6183AEAB1DE004F70062043D /* TracingPoint.h */,
+				6183AEAC1DE004F70062043D /* TracingPoint.m */,
+				6183AEAD1DE004F70062043D /* Util.h */,
+				6183AEAE1DE004F70062043D /* Util.m */,
+				6183AEB31DE036330062043D /* CarDataObject.h */,
+				6183AEB41DE036330062043D /* CarDataObject.m */,
+			);
+			path = MovingAnnotationSource;
 			sourceTree = "<group>";
 		};
 		61F09CA71DDD4A5700471D2A /* Networking */ = {
@@ -3427,6 +3460,7 @@
 				611E24C31DD2C8AF00277F0F /* NTESContactUtilItem.m in Sources */,
 				611E25901DD2C8B000277F0F /* NIMTeamCardOperationItem.m in Sources */,
 				611E257D1DD2C8B000277F0F /* NIMSessionViewController.m in Sources */,
+				6183AEB51DE036330062043D /* CarDataObject.m in Sources */,
 				611E25251DD2C8B000277F0F /* NTESBundleSetting.m in Sources */,
 				611E24DD1DD2C8AF00277F0F /* NTESSnapchatAttachment.m in Sources */,
 				611E25BE1DD2C8B000277F0F /* UIImage+NIMMultiFormat.m in Sources */,
@@ -3486,6 +3520,7 @@
 				611E24E71DD2C8AF00277F0F /* NTESSessionWhiteBoardContentView.m in Sources */,
 				611E24AE1DD2C8AF00277F0F /* NTESChatroomManager.m in Sources */,
 				61FC3CF41DDAE806002DB61B /* MapLeftViewTableViewCell.m in Sources */,
+				6183AEB11DE004F70062043D /* TracingPoint.m in Sources */,
 				611E25301DD2C8B000277F0F /* NTESTimerHolder.m in Sources */,
 				611E258D1DD2C8B000277F0F /* NIMSessionListViewController.m in Sources */,
 				611E25681DD2C8B000277F0F /* NIMInputToolBar.m in Sources */,
@@ -3495,8 +3530,10 @@
 				611E25931DD2C8B000277F0F /* NIMUsrInfoData.m in Sources */,
 				611E24C11DD2C8AF00277F0F /* NTESGroupedUsrInfo.m in Sources */,
 				611E24C71DD2C8AF00277F0F /* NTESContactViewController.m in Sources */,
+				6183AEB21DE004F70062043D /* Util.m in Sources */,
 				611E24DE1DD2C8AF00277F0F /* NTESWhiteboardAttachment.m in Sources */,
 				611E24A21DD2C8AF00277F0F /* NTESColorButtonCell.m in Sources */,
+				6183AEAF1DE004F70062043D /* CACoordLayer.m in Sources */,
 				611E25A11DD2C8B000277F0F /* NIMKitTimerHolder.m in Sources */,
 				611E24AF1DD2C8AF00277F0F /* NTESChatroomListViewController.m in Sources */,
 				611E252B1DD2C8B000277F0F /* NTESFileLocationHelper.m in Sources */,
@@ -3537,6 +3574,7 @@
 				611E259C1DD2C8B000277F0F /* NIMTeamCardHeaderCell.m in Sources */,
 				611E252D1DD2C8B000277F0F /* NTESSDKConfig.m in Sources */,
 				611E255E1DD2C8B000277F0F /* NIMContactSelectTabView.m in Sources */,
+				6183AEB01DE004F70062043D /* MovingAnnotationView.m in Sources */,
 				611E24EA1DD2C8AF00277F0F /* NTESFilePreViewController.m in Sources */,
 				611E25091DD2C8B000277F0F /* NTESLogManager.m in Sources */,
 				611E256A1DD2C8B000277F0F /* NIMKitEvent.m in Sources */,
