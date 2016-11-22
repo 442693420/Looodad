@@ -10,7 +10,7 @@
 #import "RegisterViewController.h"
 #import "NTESLoginManager.h"
 #import "NTESService.h"
-#import "HomeViewController.h"
+#import "MapViewController.h"
 @interface LoginViewController ()<RegisterViewControllerDelegate,UITextFieldDelegate>
 @property (nonatomic , strong)UITextField *usernameTextField;
 @property (nonatomic , strong)UITextField *passwordTextField;
@@ -92,7 +92,7 @@
                                           [[NTESLoginManager sharedManager] setCurrentLoginData:sdkData];
                                           
                                           [[NTESServiceManager sharedManager] start];
-                                          HomeViewController * mainVC = [[HomeViewController alloc] init];                                          UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainVC];
+                                          MapViewController * mainVC = [[MapViewController alloc] init];                                          UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainVC];
                                           [UIApplication sharedApplication].keyWindow.rootViewController = nav;
                                       }
                                       else

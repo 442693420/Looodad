@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NIMKit/NIMKit/Classes/Sections/Session/NIMSessionViewController.m"
-            timestampString = "500709327.415157"
+            timestampString = "501491253.338276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "645"
-            endingLineNumber = "645"
+            startingLineNumber = "647"
+            endingLineNumber = "647"
             landmarkName = "-uiAddMessages:"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NIMKit/NIMKit/Classes/Sections/Session/NIMSessionViewController.m"
-            timestampString = "500709728.25402"
+            timestampString = "501491253.338276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "648"
-            endingLineNumber = "648"
+            startingLineNumber = "650"
+            endingLineNumber = "650"
             landmarkName = "-uiAddMessages:"
             landmarkType = "7">
          </BreakpointContent>

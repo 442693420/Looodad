@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 #import "MapViewController.h"
 //网易云信
 #import "NIMSDK.h"
@@ -158,7 +159,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
         [[[NIMSDK sharedSDK] loginManager] autoLogin:account
                                                token:token];
         [[NTESServiceManager sharedManager] start];
-        MapViewController * mainVC = [[MapViewController alloc] init];                                          UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainVC];
+        MapViewController *mainVC = [[MapViewController alloc] init];                                          UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mainVC];
         self.window.rootViewController = nav;
     }
     else
@@ -179,7 +180,7 @@ NSString *NTESNotificationLogout = @"NTESNotificationLogout";
 
 - (void)setupLoginViewController
 {
-    MapViewController *viewController = [[MapViewController alloc] init];
+    LoginViewController *viewController = [[LoginViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
     self.window.rootViewController = nav;
 }

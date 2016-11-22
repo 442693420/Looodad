@@ -36,7 +36,8 @@
 {
     if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.backgroundColor = NIMKit_UIColorFromRGB(0xe4e7ec);
+//        self.backgroundColor = NIMKit_UIColorFromRGB(0xe4e7ec);
+        self.backgroundColor = [UIColor clearColor];
         [self makeComponents];
         [self makeGesture];
     }

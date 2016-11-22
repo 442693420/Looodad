@@ -9,8 +9,6 @@
 #import "MapViewLeftViewController.h"
 #import "MapLeftViewTitleView.h"
 #import "MapLeftViewTableViewCell.h"
-
-
 #define LeftMargin  0.2*CGRectGetWidth([UIScreen mainScreen].bounds)
 
 @interface MapViewLeftViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -82,7 +80,7 @@ static NSString *cellIdentifier = @"MapLeftViewTableViewCell";
     if (section == 0) {
         return self.dataArr.count;
     }else{
-        return 1;
+        return 2;
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -99,11 +97,20 @@ static NSString *cellIdentifier = @"MapLeftViewTableViewCell";
         NSDictionary *dic = [self.dataArr objectAtIndex:indexPath.row];
         cell.titleLab.text = [dic objectForKey:@"title"];
     }else{
-        cell.titleLab.text = @"首次连接自驾宝";
+        if (indexPath.row == 0) {
+            cell.titleLab.text = @"开启直播";
+        }else{
+            cell.titleLab.text = @"首次连接自驾宝";
+        }
     }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        if ([self.delegate respondsToSelector:@selector(mapViewLeftViewControllerTableViewCellDidSelected:)]) {
+            [self.delegate mapViewLeftViewControllerTableViewCellDidSelected:indexPath];
+        }
+    }
    
 }
 

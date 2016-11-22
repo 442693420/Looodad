@@ -89,8 +89,10 @@ NIMUserManagerDelegate>
     self.navigationItem.leftItemsSupplementBackButton = YES;
 
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    self.tableView.backgroundColor = NIMKit_UIColorFromRGB(0xe4e7ec);
+//    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-SCREEN_HEIGHT/3, SCREEN_WIDTH, SCREEN_HEIGHT/3) style:UITableViewStylePlain];
+//    self.tableView.backgroundColor = NIMKit_UIColorFromRGB(0xe4e7ec);
+    self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

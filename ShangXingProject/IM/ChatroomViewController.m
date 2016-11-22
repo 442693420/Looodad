@@ -18,7 +18,9 @@
 @property (nonatomic,strong) NTESChatroomConfig *config;
 
 @property (nonatomic,strong) NIMChatroom *chatroom;
-
+//直播
+@property (nonatomic , strong)WMPlayer *wmPlayer;
+@property (nonatomic , copy)NSString *videoUrl;
 
 @end
 
@@ -35,6 +37,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.videoUrl = @"http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8";
+    
+    self.wmPlayer = [[WMPlayer alloc]initWithFrame:self.view.bounds videoURLStr:self.videoUrl];
+    self.wmPlayer.bottomView.hidden = YES;
+    self.wmPlayer.isLiving = YES;
+    [self.wmPlayer.player play];
+    [self.view addSubview:self.wmPlayer];
+    [self.view sendSubviewToBack:self.wmPlayer];
 }
 - (id<NIMSessionConfig>)sessionConfig{
     return self.config;
@@ -43,6 +53,8 @@
     [super viewWillDisappear:animated];
     [[NIMSDK sharedSDK].mediaManager stopRecord];
     [[NIMSDK sharedSDK].mediaManager stopPlay];
+    [self releaseWMPlayer];
+
 }
 - (void)sendMessage:(NIMMessage *)message
 {
@@ -98,15 +110,29 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)releaseWMPlayer{
+    [self.wmPlayer.player.currentItem cancelPendingSeeks];
+    [self.wmPlayer.player.currentItem.asset cancelLoading];
+    
+    [self.wmPlayer.player pause];
+    [self.wmPlayer removeFromSuperview];
+    [self.wmPlayer.playerLayer removeFromSuperlayer];
+    [self.wmPlayer.player replaceCurrentItemWithPlayerItem:nil];
+    self.wmPlayer = nil;
+    self.wmPlayer.player = nil;
+    self.wmPlayer.currentItem = nil;
+    
+    self.wmPlayer.playOrPauseBtn = nil;
+    self.wmPlayer.playerLayer = nil;
 }
-*/
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

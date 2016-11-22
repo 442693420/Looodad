@@ -30,6 +30,10 @@
  */
 @property(nonatomic,retain)AVPlayerLayer *playerLayer;
 /**
+ *  BOOL值判断当前播放模式(直播 还是 视频)
+ */
+@property(nonatomic,assign)BOOL isLiving;
+/**
  *  底部操作工具栏
  */
 @property(nonatomic,retain)UIView *bottomView;

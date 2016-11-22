@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol MapViewLeftViewControllerDelegate<NSObject>
+- (void)mapViewLeftViewControllerTableViewCellDidSelected:(NSIndexPath *)cellIndexPath;
+@end
 @interface MapViewLeftViewController : UIViewController
+@property (nonatomic,weak) id<MapViewLeftViewControllerDelegate> delegate;
 
 @end

@@ -10,6 +10,8 @@
 #import "MapViewLeftViewController.h"
 #import "VedioListViewController.h"
 #import "ImgListViewController.h"
+#import "HomeViewController.h"
+
 #import "MapTopSegmentedView.h"
 #import "MapBottomView.h"
 #import "SliderManager.h"
@@ -21,7 +23,7 @@
 #import "Util.h"
 #import "MovingAnnotationView.h"
 #import "CarDataObject.h"
-@interface MapViewController ()<MapBottomViewDelegate,MAMapViewDelegate,AMapSearchDelegate,UIAlertViewDelegate,UITextFieldDelegate,AMapNaviDriveManagerDelegate,AMapNaviDriveViewDelegate,MapTopSegmentedViewDelegate>
+@interface MapViewController ()<MapBottomViewDelegate,MAMapViewDelegate,AMapSearchDelegate,UIAlertViewDelegate,UITextFieldDelegate,AMapNaviDriveManagerDelegate,AMapNaviDriveViewDelegate,MapTopSegmentedViewDelegate,MapViewLeftViewControllerDelegate>
 @property (nonatomic , strong) MAMapView *mapView;
 @property (nonatomic , strong) UIBarButtonItem *rightItem;
 @property (nonatomic , strong) UIBarButtonItem *leftItem;
@@ -75,6 +77,7 @@
     }];
     //初始化侧滑chontroller
     MapViewLeftViewController *menuVC = [[MapViewLeftViewController alloc]init];
+    menuVC.delegate = self;
     SliderManager *slideManager = [SliderManager sharedManager];
     [slideManager setupMainController:self];
     [slideManager setupMenuController:menuVC];
@@ -746,7 +749,15 @@ updatingLocation:(BOOL)updatingLocation
             break;
     }
 }
-
+#pragma mark leftViewController-delegaet
+-(void)mapViewLeftViewControllerTableViewCellDidSelected:(NSIndexPath *)cellIndexPath{
+    //关闭侧滑
+    [[SliderManager sharedManager] openOrClose];
+    if (cellIndexPath.section == 1 && cellIndexPath.row == 0) {
+        HomeViewController *viewController = [[HomeViewController alloc]init];
+        [self.navigationController pushViewController:viewController animated:NO];
+    }
+}
 #pragma mark bottomView-delegate
 -(void)mapBottomViewUpDownBtnClick{
     if (self.bottomViewShowAll) {

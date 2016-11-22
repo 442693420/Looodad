@@ -364,24 +364,26 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
                 
             case AVPlayerStatusReadyToPlay:
             {
-                
-                /* Once the AVPlayerItem becomes ready to play, i.e.
-                 [playerItem status] == AVPlayerItemStatusReadyToPlay,
-                 its duration can be fetched from the item. */
-                if (CMTimeGetSeconds(self.player.currentItem.duration)) {
-                    self.progressSlider.maximumValue = CMTimeGetSeconds(self.player.currentItem.duration);
-                }
-                
-                [self initTimer];
-                if (self.durationTimer==nil) {
-                    self.durationTimer = [NSTimer timerWithTimeInterval:0.2 target:self selector:@selector(finishedPlay:) userInfo:nil repeats:YES];
-                    [[NSRunLoop currentRunLoop] addTimer:self.durationTimer forMode:NSDefaultRunLoopMode];
-                }
-                
-                //5s dismiss bottomView
-                if (self.autoDismissTimer==nil) {
-                    self.autoDismissTimer = [NSTimer timerWithTimeInterval:5.0 target:self selector:@selector(autoDismissBottomView:) userInfo:nil repeats:YES];
-                    [[NSRunLoop currentRunLoop] addTimer:self.autoDismissTimer forMode:NSDefaultRunLoopMode];
+                if (!self.isLiving) {
+                    /* Once the AVPlayerItem becomes ready to play, i.e.
+                     [playerItem status] == AVPlayerItemStatusReadyToPlay,
+                     its duration can be fetched from the item. */
+                    if (CMTimeGetSeconds(self.player.currentItem.duration)) {
+                        self.progressSlider.maximumValue = CMTimeGetSeconds(self.player.currentItem.duration);
+                    }
+                    
+                    [self initTimer];
+                    if (self.durationTimer==nil) {
+                        self.durationTimer = [NSTimer timerWithTimeInterval:0.2 target:self selector:@selector(finishedPlay:) userInfo:nil repeats:YES];
+                        [[NSRunLoop currentRunLoop] addTimer:self.durationTimer forMode:NSDefaultRunLoopMode];
+                    }
+                    
+                    //5s dismiss bottomView
+                    if (self.autoDismissTimer==nil) {
+                        self.autoDismissTimer = [NSTimer timerWithTimeInterval:5.0 target:self selector:@selector(autoDismissBottomView:) userInfo:nil repeats:YES];
+                        [[NSRunLoop currentRunLoop] addTimer:self.autoDismissTimer forMode:NSDefaultRunLoopMode];
+                    }
+
                 }
                 
                 
